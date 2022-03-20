@@ -46,7 +46,6 @@ export class ElevatorSystem implements IElevatorSystem {
 	}
 	pickup(originFloor: number, direction: number): void {
 		// Create pickup with unique nanoid
-		console.log("pickup", originFloor, direction);
 		this.pickupQueue.push([originFloor, direction, nanoid()]);
 	}
 	status(): Elevator[] {
@@ -74,7 +73,6 @@ export class ElevatorSystem implements IElevatorSystem {
 				const goto = pickup[0] + pickup[1];
 				// Elevator is at the pickup destination, remove pickup
 				if (elevator[1] === goto) {
-					console.log(pickup[0], pickup[1], elevator[1], goto);
 					this.pickupMap[elevator[0]] = this.pickupMap[
 						elevator[0]
 					].filter((p) => p[2] !== pickup[2]);
