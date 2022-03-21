@@ -1,6 +1,8 @@
 import {
 	Button,
+	Checkbox,
 	Flex,
+	Image,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
@@ -10,10 +12,27 @@ import {
 	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
+import { useAudio } from "react-use";
 import CustomPassengerForm from "./CustomPassengerForm";
+import Confetti from "react-confetti";
 
 const SystemControls = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [audio, state, controls, ref] = useAudio({
+		src: "/music/elevator.mp3",
+		autoPlay: false,
+		loop: true,
+	});
+
+	const onCheckboxChange = (e: any) => {
+		if (e.target.checked) {
+			controls.play();
+			controls.volume(0.5);
+		} else {
+			controls.pause();
+		}
+	};
+
 	return (
 		<Flex
 			bgColor={"gray.900"}
@@ -28,6 +47,17 @@ const SystemControls = () => {
 			<Button mt={2} colorScheme={"green"} onClick={onOpen}>
 				Add custom passenger
 			</Button>
+			{audio}
+			<Checkbox mt={2} onChange={onCheckboxChange} defaultChecked={false}>
+				Mood booster ✨ 🎉
+			</Checkbox>
+
+			{state.playing && (
+				<>
+					<Image h={96} src="/images/dog.gif" mt={4} />
+					<Confetti />
+				</>
+			)}
 
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />

@@ -4,7 +4,11 @@ import { IGroupedPickups } from "../types";
 import PassengerCount from "./PassengerCount";
 
 interface IElevatorVisStripeProps {
-	addPassenger(floorNumber: number): void;
+	addPassenger(
+		floorNumber: number,
+		destination: number,
+		random: boolean
+	): void;
 	i: number;
 	floorPickups: IGroupedPickups;
 	children?: ReactNode;
@@ -39,7 +43,7 @@ export const ElevatorVisStripe = ({
 					variant="ghost"
 					colorScheme={"green"}
 					size="sm"
-					onClick={() => addPassenger(i)}
+					onClick={() => addPassenger(i, 0, true)}
 				>
 					Add passenger
 				</Button>

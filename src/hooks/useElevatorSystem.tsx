@@ -37,7 +37,11 @@ export const useElevatorSystem = ({
 		systemRef.current.elevatorSystem = elevatorSystem;
 	};
 
-	const addPassenger = (floorNumber: number, destination = 0) => {
+	const addPassenger = (
+		floorNumber: number,
+		destination = 0,
+		random = false
+	) => {
 		if (!isRunning) {
 			toast({
 				title: "Simulation is not running",
@@ -49,14 +53,19 @@ export const useElevatorSystem = ({
 			return;
 		}
 
-		// Random destination that shouldnt overflow the elevator
-		let randomDest = Math.random() > 0.5 ? 2 : -2;
-		if (floorNumber + randomDest > floorNumber) {
-			randomDest = -2;
+		if (random) {
+			// Random destination that shouldnt overflow the elevator
+			let randomDest = Math.random() > 0.5 ? 2 : -2;
+			if (floorNumber + randomDest > floorNumber) {
+				randomDest = -2;
+			}
+			if (floorNumber + randomDest < -floorNumber) {
+				randomDest = 2;
+			}
+			destination = randomDest;
 		}
-		if (floorNumber + randomDest < -floorNumber) {
-			randomDest = 2;
-		}
+
+		console.log(random);
 
 		systemRef.current.elevatorSystem.pickup(
 			floorNumber,
