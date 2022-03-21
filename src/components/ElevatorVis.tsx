@@ -1,19 +1,20 @@
 import { Flex, Button, Text } from "@chakra-ui/react";
 import { range } from "../utils/range";
 import { Elevator } from "./Elevator";
-import { Elevator as ElevatorType } from "../core/ElevatorSystem";
 import PassengerCount from "./PassengerCount";
-import { INewElevatorSystem } from "../core/NewElevatorSystem";
+import { IElevatorSystem } from "../core/ElevatorSystem";
+import ElevatorVisStripe from "./ElevatorVisStripe";
+import { ElevatorDto } from "../core/ElevatorSystem";
 
 interface ISystemRef {
-	elevatorSystem: INewElevatorSystem;
+	elevatorSystem: IElevatorSystem;
 }
 
 interface IElevatorVisProps {
 	floorNo: number;
 	addPassenger: (floorNumber: number) => void;
 	systemRef: React.MutableRefObject<ISystemRef>;
-	elevatorStatus: ElevatorType[];
+	elevatorStatus: ElevatorDto[];
 }
 
 export function ElevatorVis({
@@ -25,102 +26,44 @@ export function ElevatorVis({
 	return (
 		<>
 			{range(floorNo / 2, 1).map((i) => (
-				<Flex
+				<ElevatorVisStripe
+					addPassenger={addPassenger}
+					i={i}
 					key={i}
-					rounded="lg"
-					h="60px"
-					alignItems="center"
-					justifyContent={"space-between"}
-					gap={1}
-					bgColor={(i + 1) % 2 === 0 ? "gray.900" : "gray.800"}
-					px={4}
-				>
-					<Text color="gray.300">{i}</Text>
-					<Flex alignItems="center">
-						<Text>
-							<PassengerCount
-								floorPickups={systemRef.current.elevatorSystem.floorPickups(
-									i
-								)}
-							/>
-						</Text>
-						<Button
-							variant="ghost"
-							colorScheme={"green"}
-							size="sm"
-							onClick={() => addPassenger(i)}
-						>
-							Add passenger
-						</Button>
-					</Flex>
-				</Flex>
+					floorPickups={systemRef.current.elevatorSystem.getFloorPickups(
+						i
+					)}
+				/>
 			))}
-			<Flex
-				rounded="lg"
-				h="60px"
-				alignItems="center"
-				justifyContent={"space-between"}
-				gap={1}
-				px={4}
+			<ElevatorVisStripe
+				addPassenger={addPassenger}
+				i={0}
+				key={0}
+				floorPickups={systemRef.current.elevatorSystem.getFloorPickups(
+					0
+				)}
 			>
-				<Text color="gray.300">0</Text>
 				{elevatorStatus.map((elevator, i) => (
 					<Elevator
 						key={elevator[0]}
 						elevatorId={elevator[0]}
 						currentFloor={elevator[1]}
 						destinationFloor={elevator[2]}
-						passengerCount={systemRef.current.elevatorSystem.elevatorPickups(
+						passengerCount={systemRef.current.elevatorSystem.getElevatorPickups(
 							elevator[0]
 						)}
 					/>
 				))}
-				<Flex alignItems="center">
-					<Text>
-						<PassengerCount
-							floorPickups={systemRef.current.elevatorSystem.floorPickups(
-								0
-							)}
-						/>
-					</Text>
-					<Button
-						variant="ghost"
-						colorScheme={"green"}
-						size="sm"
-						onClick={() => addPassenger(0)}
-					>
-						Add passenger
-					</Button>
-				</Flex>
-			</Flex>
+			</ElevatorVisStripe>
 			{range(-1, -(floorNo / 2)).map((i) => (
-				<Flex
+				<ElevatorVisStripe
+					addPassenger={addPassenger}
+					i={i}
 					key={i}
-					rounded="lg"
-					h="60px"
-					alignItems="center"
-					justifyContent={"space-between"}
-					gap={1}
-					bgColor={(i + 1) % 2 === 0 ? "gray.900" : "gray.800"}
-					px={4}
-				>
-					<Text color="gray.300">{i}</Text>
-					<Flex alignItems="center">
-						<PassengerCount
-							floorPickups={systemRef.current.elevatorSystem.floorPickups(
-								i
-							)}
-						/>
-						<Button
-							variant="ghost"
-							colorScheme={"green"}
-							size="sm"
-							onClick={() => addPassenger(i)}
-						>
-							Add passenger
-						</Button>
-					</Flex>
-				</Flex>
+					floorPickups={systemRef.current.elevatorSystem.getFloorPickups(
+						i
+					)}
+				/>
 			))}
 		</>
 	);

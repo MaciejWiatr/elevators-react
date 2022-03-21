@@ -32,10 +32,10 @@ const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
 
 	return (
 		<Box bgColor={"gray.900"} rounded={"lg"} shadow={"lg"} p={4}>
-			<Text fontWeight={"semibold"}>
+			<Box fontWeight={"semibold"}>
 				Elevator system editor{" "}
 				{runSimulation && <Spinner size={"sm"} />}
-			</Text>
+			</Box>
 			<Divider my={4} />
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<FormControl colorScheme={"messenger"}>

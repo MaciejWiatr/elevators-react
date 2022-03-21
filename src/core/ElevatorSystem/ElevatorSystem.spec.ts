@@ -1,10 +1,10 @@
-import { NewElevatorSystem } from "./ElevatorSystem";
+import { ElevatorSystem } from "./ElevatorSystem";
 import { performance } from "perf_hooks";
 import { range } from "../../utils";
 
 describe("New elevator system", () => {
 	it("should handle 1024 pickups with 16 elevators under 100 miliseconds", () => {
-		const system = new NewElevatorSystem(16);
+		const system = new ElevatorSystem(16);
 
 		range(1, 1024).forEach((_) => {
 			system.pickup(
@@ -25,8 +25,8 @@ describe("New elevator system", () => {
 		expect(endTime - startTime).toBeLessThan(100);
 	});
 
-	it("should correcltly deliver pickups", () => {
-		const system = new NewElevatorSystem(2);
+	it("should correctly deliver pickups", () => {
+		const system = new ElevatorSystem(2);
 
 		system.pickup(0, 2);
 		system.pickup(0, -2);

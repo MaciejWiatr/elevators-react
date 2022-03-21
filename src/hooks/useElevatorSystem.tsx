@@ -1,8 +1,8 @@
+import { useToast } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { useInterval } from "react-use";
-import { ElevatorSystem } from "../core/ElevatorSystem";
-import { ElevatorDto, NewElevatorSystem } from "../core/NewElevatorSystem";
-import { ElevatorType, IElevatorFormData, ISystemRef } from "../types";
+import { ElevatorDto, ElevatorSystem } from "../core/ElevatorSystem";
+import { IElevatorFormData, ISystemRef } from "../types";
 
 interface IUseElevatorSystemArgs {
 	floorNumber: number;
@@ -13,17 +13,16 @@ export const useElevatorSystem = ({
 	floorNumber,
 	simulationSpeed = 300,
 }: IUseElevatorSystemArgs) => {
+	const toast = useToast();
 	let systemRef = useRef<ISystemRef>({
-		elevatorSystem: new NewElevatorSystem(1),
+		elevatorSystem: new ElevatorSystem(1),
 	});
 	const [elevatorStatus, setElevatorStatus] = useState<ElevatorDto[]>([]);
 	const [isRunning, setIsRunning] = useState(false);
 	const [shouldAddOverTime, setShouldAddOverTime] = useState(false);
 
 	const updateElevatorSystem = (elevatorForm: IElevatorFormData) => {
-		const elevatorSystem = new NewElevatorSystem(
-			elevatorForm.elevatorNumber
-		);
+		const elevatorSystem = new ElevatorSystem(elevatorForm.elevatorNumber);
 
 		setShouldAddOverTime(elevatorForm.shouldAddPassengers);
 
@@ -39,7 +38,16 @@ export const useElevatorSystem = ({
 	};
 
 	const addPassenger = (floorNumber: number, destination = 0) => {
-		console.log("add passenger", floorNumber, destination);
+		if (!isRunning) {
+			toast({
+				title: "Simulation is not running",
+				description: "Please start simulation first",
+				position: "bottom-right",
+				status: "error",
+				isClosable: true,
+			});
+			return;
+		}
 
 		// Random destination that shouldnt overflow the elevator
 		let randomDest = Math.random() > 0.5 ? 2 : -2;

@@ -12,12 +12,12 @@ const config = {
 const theme = extendTheme({ config });
 
 ReactDOM.render(
-	<React.StrictMode>
-		<ElevatorSystemProvider>
-			<ChakraProvider theme={theme}>
+	<ChakraProvider theme={theme}>
+		<React.StrictMode>
+			<ElevatorSystemProvider>
 				<App />
-			</ChakraProvider>
-		</ElevatorSystemProvider>
-	</React.StrictMode>,
+			</ElevatorSystemProvider>
+		</React.StrictMode>
+	</ChakraProvider>,
 	document.getElementById("root")
 );
