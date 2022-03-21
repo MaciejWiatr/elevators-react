@@ -2,7 +2,7 @@ import { PickupItem } from ".";
 import { ElevatorDirection, IElevator } from "./Elevator";
 
 export class ElevatorHelpers {
-	public static getPassengersThatGoInTheSameDirection(
+	public static getPassengersGoingSameDirection(
 		elevator: IElevator,
 		pickupList: PickupItem[]
 	) {
@@ -13,14 +13,17 @@ export class ElevatorHelpers {
 				const pickupGoingDown = pickupDirection < elevator.currentFloor;
 
 				// Get only pickups that are going in the same direction
-				if (pickupGoingUp && elevator.direction == ElevatorDirection.UP)
+				if (
+					pickupGoingUp &&
+					elevator.direction === ElevatorDirection.UP
+				)
 					return true;
 				else if (
 					pickupGoingDown &&
-					elevator.direction == ElevatorDirection.DOWN
+					elevator.direction === ElevatorDirection.DOWN
 				)
 					return true;
-				else if (elevator.direction == ElevatorDirection.STOP)
+				else if (elevator.direction === ElevatorDirection.STOP)
 					return true;
 				else return false;
 			});
@@ -83,15 +86,15 @@ export class ElevatorHelpers {
 				}
 				break;
 			default:
-				const pickupUp = pickupDestinations.filter(
+				const pickupsGoingUp = pickupDestinations.filter(
 					(p) => p > elevator.currentFloor
 				).length;
-				const pickupDown = pickupDestinations.filter(
+				const pickupGoingDown = pickupDestinations.filter(
 					(p) => p < elevator.currentFloor
 				).length;
-				if (pickupUp > pickupDown) {
+				if (pickupsGoingUp > pickupGoingDown) {
 					elevatorGoTo = highestFloor;
-				} else if (pickupUp < pickupDown) {
+				} else if (pickupsGoingUp < pickupGoingDown) {
 					elevatorGoTo = lowestFloor;
 				} else {
 					elevatorGoTo = highestFloor;

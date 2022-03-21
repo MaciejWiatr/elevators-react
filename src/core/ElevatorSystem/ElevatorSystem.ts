@@ -63,7 +63,7 @@ export class ElevatorSystem implements IElevatorSystem {
 
 	getFloorPickups(floorNumber: number) {
 		const pickups = this.pickupList.filter(
-			(pickup) => pickup[0] === floorNumber
+			([pickupOrigin]) => pickupOrigin === floorNumber
 		);
 
 		return groupByDirection(pickups);

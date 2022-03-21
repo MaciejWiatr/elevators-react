@@ -72,11 +72,10 @@ export class Elevator implements IElevator {
 		if (pickupList.length === 0) return [];
 
 		// Check if anyone is waiting to be picked up on a certain floor
-		const floorPickups =
-			ElevatorHelpers.getPassengersThatGoInTheSameDirection(
-				this,
-				pickupList
-			);
+		const floorPickups = ElevatorHelpers.getPassengersGoingSameDirection(
+			this,
+			pickupList
+		);
 		this.pickups = [...this.pickups, ...floorPickups];
 
 		const floorPickupIds = floorPickups.map(
