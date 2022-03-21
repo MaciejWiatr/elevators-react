@@ -14,7 +14,7 @@ https://elevators-react.vercel.app/
 
 ## How to run locally
 
-Install my-project with npm or pnpm
+Install elevators-react with npm or pnpm
 
 ### Requirements:
 
