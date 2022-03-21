@@ -38,7 +38,9 @@ export const useElevatorSystem = ({
 		systemRef.current.elevatorSystem = elevatorSystem;
 	};
 
-	const addPassenger = (floorNumber: number) => {
+	const addPassenger = (floorNumber: number, destination = 0) => {
+		console.log("add passenger", floorNumber, destination);
+
 		// Random destination that shouldnt overflow the elevator
 		let randomDest = Math.random() > 0.5 ? 2 : -2;
 		if (floorNumber + randomDest > floorNumber) {
@@ -48,7 +50,13 @@ export const useElevatorSystem = ({
 			randomDest = 2;
 		}
 
-		systemRef.current.elevatorSystem.pickup(floorNumber, randomDest);
+		systemRef.current.elevatorSystem.pickup(
+			floorNumber,
+			destination - floorNumber
+		);
+		setElevatorStatus((s) => [
+			...systemRef.current.elevatorSystem.status(),
+		]);
 	};
 
 	const step = () => {

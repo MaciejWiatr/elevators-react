@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import ElevatorSystemProvider from "./providers/ElevatorSystemProvider";
 
 const config = {
 	initialColorMode: "dark",
@@ -12,9 +13,11 @@ const theme = extendTheme({ config });
 
 ReactDOM.render(
 	<React.StrictMode>
-		<ChakraProvider theme={theme}>
-			<App />
-		</ChakraProvider>
+		<ElevatorSystemProvider>
+			<ChakraProvider theme={theme}>
+				<App />
+			</ChakraProvider>
+		</ElevatorSystemProvider>
 	</React.StrictMode>,
 	document.getElementById("root")
 );

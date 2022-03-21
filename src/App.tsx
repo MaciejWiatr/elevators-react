@@ -3,7 +3,9 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import { ElevatorVis } from "./components/ElevatorVis";
 import { IElevatorFormData } from "./types";
 import ElevatorForm from "./components/ElevatorForm";
-import { useElevatorSystem } from "./hooks";
+import SystemControls from "./components/SystemControls";
+import { useContext } from "react";
+import { ElevatorContext } from "./providers/ElevatorSystemProvider";
 
 const App = () => {
 	const {
@@ -14,7 +16,7 @@ const App = () => {
 		floorNumber,
 		systemRef,
 		updateElevatorSystem,
-	} = useElevatorSystem({ floorNumber: 14, simulationSpeed: 300 });
+	} = useContext(ElevatorContext);
 
 	const onSubmit = (data: IElevatorFormData) => {
 		if (isRunning) {
@@ -47,6 +49,7 @@ const App = () => {
 			</GridItem>
 			<GridItem p={2}>
 				<ElevatorForm onSubmit={onSubmit} runSimulation={isRunning} />
+				<SystemControls />
 			</GridItem>
 		</Grid>
 	);
