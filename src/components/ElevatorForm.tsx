@@ -68,7 +68,7 @@ const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
 					</Box>
 					<Box my={2}>
 						<FormLabel htmlFor="passengerNumber">
-							Number of initial, randomly generated passengers
+							Number of initial, randomly placed passengers
 						</FormLabel>
 						<NumberInput id="passengerNumber">
 							<NumberInputField
@@ -93,7 +93,7 @@ const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
 						)}
 					</Box>
 					<FormLabel htmlFor="email-alerts" mb="0">
-						Should add passengers over time?
+						Should add random passengers over time?
 					</FormLabel>
 					<Switch
 						id="email-alerts"
