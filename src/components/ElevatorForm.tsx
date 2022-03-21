@@ -24,7 +24,11 @@ interface IElevatorFormProps {
 }
 
 const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
-	const { handleSubmit, register, reset } = useForm<IElevatorFormData>();
+	const {
+		handleSubmit,
+		register,
+		formState: { errors },
+	} = useForm<IElevatorFormData>();
 
 	return (
 		<Box bgColor={"gray.900"} rounded={"lg"} shadow={"lg"} p={4}>
@@ -46,6 +50,8 @@ const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
 									required: true,
 									valueAsNumber: true,
 									disabled: runSimulation,
+									min: 0,
+									max: 20,
 								})}
 							/>
 							<NumberInputStepper>
@@ -54,6 +60,11 @@ const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
 							</NumberInputStepper>
 						</NumberInput>
 						<FormHelperText>Please don't go over 16</FormHelperText>
+						{errors.elevatorNumber && (
+							<Text color="red.400">
+								Please enter a valid number in range {"<0-20>"}
+							</Text>
+						)}
 					</Box>
 					<Box my={2}>
 						<FormLabel htmlFor="passengerNumber">
@@ -66,6 +77,8 @@ const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
 									required: true,
 									valueAsNumber: true,
 									disabled: runSimulation,
+									min: 0,
+									max: 999,
 								})}
 							/>
 							<NumberInputStepper>
@@ -73,6 +86,11 @@ const ElevatorForm = ({ onSubmit, runSimulation }: IElevatorFormProps) => {
 								<NumberDecrementStepper />
 							</NumberInputStepper>
 						</NumberInput>
+						{errors.passengerNumber && (
+							<Text color="red.400">
+								Please enter a valid number in range {"<0-999>"}
+							</Text>
+						)}
 					</Box>
 					<FormLabel htmlFor="email-alerts" mb="0">
 						Should add passengers over time?

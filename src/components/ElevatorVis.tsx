@@ -1,12 +1,12 @@
-import { Flex, Box, Button, Text } from "@chakra-ui/react";
-import { IElevatorSystem } from "../core/ElevatorSystem";
+import { Flex, Button, Text } from "@chakra-ui/react";
 import { range } from "../utils/range";
 import { Elevator } from "./Elevator";
 import { Elevator as ElevatorType } from "../core/ElevatorSystem";
 import PassengerCount from "./PassengerCount";
+import { INewElevatorSystem } from "../core/NewElevatorSystem";
 
 interface ISystemRef {
-	elevatorSystem: IElevatorSystem;
+	elevatorSystem: INewElevatorSystem;
 }
 
 interface IElevatorVisProps {
@@ -56,11 +56,14 @@ export function ElevatorVis({
 				</Flex>
 			))}
 			<Flex
+				rounded="lg"
 				h="60px"
 				alignItems="center"
-				justifyContent={"center"}
+				justifyContent={"space-between"}
 				gap={1}
+				px={4}
 			>
+				<Text color="gray.300">0</Text>
 				{elevatorStatus.map((elevator, i) => (
 					<Elevator
 						key={elevator[0]}
@@ -72,6 +75,23 @@ export function ElevatorVis({
 						)}
 					/>
 				))}
+				<Flex alignItems="center">
+					<Text>
+						<PassengerCount
+							floorPickups={systemRef.current.elevatorSystem.floorPickups(
+								0
+							)}
+						/>
+					</Text>
+					<Button
+						variant="ghost"
+						colorScheme={"green"}
+						size="sm"
+						onClick={() => addPassenger(0)}
+					>
+						Add passenger
+					</Button>
+				</Flex>
 			</Flex>
 			{range(-1, -(floorNo / 2)).map((i) => (
 				<Flex

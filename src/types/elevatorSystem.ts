@@ -1,8 +1,8 @@
-import { Elevator } from "./../core/ElevatorSystem";
-import { IElevatorSystem } from "../core/ElevatorSystem";
+import { INewElevatorSystem } from "./../core/NewElevatorSystem/ElevatorSystem";
+import { IElevator } from "../core/NewElevatorSystem";
 
 export interface ISystemRef {
-	elevatorSystem: IElevatorSystem;
+	elevatorSystem: INewElevatorSystem;
 }
 
-export type ElevatorType = Elevator;
+export type ElevatorType = IElevator;
