@@ -60,7 +60,7 @@ npm run test
 Main algorithm file is located in
 
 ```
-/src/ElevatorSystem/ElevatorSystem.ts
+/src/core/ElevatorSystem/ElevatorSystem.ts
 ```
 
 ElevatorSystem exposes few functions that allow integration between frontend and the algorithm:
